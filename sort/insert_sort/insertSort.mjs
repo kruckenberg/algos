@@ -1,15 +1,11 @@
 import { assertEqualArrays } from '../../utils/js/index.mjs';
 
-function shouldMove(value, comparand, position, asc = true) {
-  return position >= 0 && (asc ? comparand > value : comparand < value);
-}
-
-function insertSort(arr, asc = true) {
+function insertSort(arr, reverse = false) {
   for (let i = 1; i < arr.length; i++) {
     const key = arr[i];
     let insertPoint = i - 1;
 
-    while (shouldMove(key, arr[insertPoint], insertPoint, asc)) {
+    while (insertPoint >= 0 && (reverse ? arr[insertPoint] < key : arr[insertPoint] > key)) {
       arr[insertPoint + 1] = arr[insertPoint];
       insertPoint -= 1;
     }
@@ -21,4 +17,4 @@ function insertSort(arr, asc = true) {
 }
 
 assertEqualArrays(insertSort([3, 1, 7, 2, 1, 9]), [1, 1, 2, 3, 7, 9]);
-assertEqualArrays(insertSort([3, 1, 7, 2, 1, 9], false), [9, 7, 3, 2, 1, 1]);
+assertEqualArrays(insertSort([3, 1, 7, 2, 1, 9], true), [9, 7, 3, 2, 1, 1]);
